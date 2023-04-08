@@ -6,7 +6,43 @@ public class Ball : MonoBehaviour
 {
     public Rigidbody rb;
     public float force;
+    public float currentPower = 1f;
+    private bool isOnGround = true;
+    public float jumpForce;
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Battery"))
+        {
+            currentPower = 1f;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isOnGround = false;
+        }
+    }
+
+    private void Update()
+    {
+        if (currentPower <= 0)
+        {
+            //game end
+            return;
+        }
+        currentPower -= Time.deltaTime * 0.05f;
+    }
 
     void FixedUpdate()
     {
@@ -25,6 +61,10 @@ public class Ball : MonoBehaviour
         if (Input.GetKey(KeyCode.DownArrow))
         {
             rb.AddForce(new Vector3(0, 0, -force));
+        }
+        if(Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.Keypad0) && isOnGround) 
+        {
+            rb.AddForce(new Vector3(0, jumpForce, 0));
         }
     }
 }
