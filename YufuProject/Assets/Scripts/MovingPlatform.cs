@@ -8,11 +8,6 @@ public class MovingPlatform : MonoBehaviour
     public Transform[] waypointsTrans;
     int index = 0;
     public float speed;
-    
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
