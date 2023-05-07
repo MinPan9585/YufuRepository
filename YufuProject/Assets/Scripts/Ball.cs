@@ -10,6 +10,8 @@ public class Ball : MonoBehaviour
     private bool isOnGround = true;
     public float jumpForce;
 
+    public bool gameStarted = false;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Battery"))
@@ -46,6 +48,8 @@ public class Ball : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!gameStarted)
+            return;
         if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(new Vector3(-force, 0, 0));
