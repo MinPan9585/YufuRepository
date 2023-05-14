@@ -448,6 +448,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b214f1e6760f77b47ae6b35d4fdafca8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ball: {fileID: 1365335187}
 --- !u!1001 &347232175
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1019,6 +1020,7 @@ MonoBehaviour:
   force: 2.82
   currentPower: 1
   jumpForce: 88
+  gameStarted: 0
 --- !u!1 &1485011134
 GameObject:
   m_ObjectHideFlags: 0

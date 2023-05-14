@@ -5,11 +5,11 @@ using UnityEngine;
 public class SimpleCameraFollow : MonoBehaviour
 {
     private Vector3 offset;
-    GameObject ball;
+    public GameObject ball;
 
     void Start()
     {
-        ball = GameObject.Find("Ball");
+        //ball = GameObject.Find("Ball");
         offset = ball.transform.position - transform.position;
     }
 
