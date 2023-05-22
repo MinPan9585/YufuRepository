@@ -7,7 +7,7 @@ public class Ball : MonoBehaviour
     public Rigidbody rb;
     public float force;
     public float currentPower = 1f;
-    private bool isOnGround = true;
+    private bool isOnGround = false;
     public float jumpForce;
 
     public bool gameStarted = false;
@@ -20,24 +20,40 @@ public class Ball : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = true;
-        }
-    }
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        isOnGround = true;
+    //    }
+    //}
 
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            isOnGround = false;
-        }
-    }
+    //private void OnCollisionExit(Collision collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Ground"))
+    //    {
+    //        isOnGround = false;
+    //    }
+    //}
 
     private void Update()
     {
+        RaycastHit info;
+        Physics.Raycast(transform.position, Vector3.down, out info, 0.26f);
+        Debug.DrawRay(transform.position, Vector3.down * 0.26f, Color.white);
+        if (Physics.Raycast(transform.position, Vector3.down, out info, 0.26f))
+        {
+            if (info.collider.CompareTag("Ground"))
+            {
+                isOnGround = true;
+            }
+        }
+        else
+        {
+            isOnGround = false;
+        }
+        
+
         if (currentPower <= 0)
         {
             //game end
@@ -68,6 +84,7 @@ public class Ball : MonoBehaviour
         }
         if(Input.GetKey(KeyCode.Space) && Input.GetKey(KeyCode.Keypad0) && isOnGround) 
         {
+            print("aaa");
             rb.AddForce(new Vector3(0, jumpForce, 0));
         }
     }
