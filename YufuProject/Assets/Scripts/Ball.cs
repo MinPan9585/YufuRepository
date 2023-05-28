@@ -9,6 +9,8 @@ public class Ball : MonoBehaviour
     public float currentPower = 1f;
     private bool isOnGround = false;
     public float jumpForce;
+    public GameManager gameManager;
+    public GameObject coinParticle;
 
     public bool gameStarted = false;
 
@@ -17,6 +19,16 @@ public class Ball : MonoBehaviour
         if (other.CompareTag("Battery"))
         {
             currentPower = 1f;
+        }
+        if(other.CompareTag("Spike") || other.CompareTag("Water"))
+        {
+            gameManager.EndGame();
+        }
+        if (other.CompareTag("Coin"))
+        {
+            gameManager.score++;
+            Destroy(other.gameObject);
+            Instantiate(coinParticle, other.gameObject.transform.position, Quaternion.identity);
         }
     }
 
@@ -57,6 +69,7 @@ public class Ball : MonoBehaviour
         if (currentPower <= 0)
         {
             //game end
+            gameManager.EndGame();
             return;
         }
         currentPower -= Time.deltaTime * 0.05f;
@@ -64,6 +77,7 @@ public class Ball : MonoBehaviour
 
     void FixedUpdate()
     {
+        Debug.Log(rb.velocity);
         if (!gameStarted)
             return;
         if (Input.GetKey(KeyCode.A))
